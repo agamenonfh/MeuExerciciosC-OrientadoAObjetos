@@ -33,9 +33,10 @@ namespace Exercicio
 
             for (int i = 0; i < 10; i++)
             {
-               
+                if (renter[i] != null)
+                {
                     Console.WriteLine(renter[i]);
-                             
+                }          
             }
         }
     }

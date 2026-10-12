@@ -1,0 +1,77 @@
+using System;
+using System.Globalization;
+using System.Collections.Generic;
+using Course.Entities;
+
+namespace Course
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Contribuinte> contribuintes = new List<Contribuinte>();
+
+            int numberOfTaxPayers = int.Parse(ReadInput("Enter the number of tax payers: "));
+
+            for (int i = 1; i <= numberOfTaxPayers; i++)
+            {
+                print($"Tax payer #{i} data: ");
+                Contribuinte contribuinte = EnterTaxPayerInformation();
+
+                if (contribuinte == null) { 
+                    continue;
+                }
+
+                contribuintes.Add(contribuinte);
+            }
+
+            printTotalPaidTaxes(contribuintes);
+        }
+
+
+
+        Contribuinte EnterTaxPayerInformation()
+        {
+            char typeOfTaxPayer = char.ToUpper(char.Parse(ReadInput("Individual or Company (I/C)? ")));
+            string name = ReadInput("Name: ");
+            double anual = double.Parse(ReadInput("Annual income: "), CultureInfo.InvariantCulture);
+
+            Contribuinte taxPayer = null;
+
+            if (typeOfTaxPayer == 'I')
+            {
+                double health = double.Parse(ReadInput("Health expenditures: "), CultureInfo.InvariantCulture);
+                taxPayer = new Individual(name, anual, health);
+            }
+            else if (typeOfTaxPayer == 'C')
+            {
+                int employees = int.Parse(ReadInput("Number of employees: "));
+                taxPayer = new Company(name, anual, employees);
+            }
+
+            return taxPayer;
+        }
+
+        static void print(String message) { Console.WriteLine(message); }
+
+        static string ReadInput(string message)
+        {
+            Console.Write(message);
+            return Console.ReadLine();
+        }
+        
+        static void printTotalPaidTaxes(List<Contribuinte> contribuintes)
+        {
+            double totalTaxes = 0.0;
+
+            foreach (Contribuinte contribuinte in contribuintes)
+            {
+                print(contribuinte.ToString());
+                totalTaxes += contribuinte.TaxesCalc();
+            }
+
+            print($"Total taxes paid {totalTaxes:F2}");
+        }
+    }
+
+}

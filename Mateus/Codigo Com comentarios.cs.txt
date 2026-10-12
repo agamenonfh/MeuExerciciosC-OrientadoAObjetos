@@ -1,0 +1,99 @@
+using System;
+using System.Globalization;
+using System.Collections.Generic;
+using Course.Entities;
+
+namespace Course
+{
+    internal class Program
+    {
+
+        //Simplificar o Main pra entender de primeira oque esta sendo feito
+        //Pegando as informacoes dos contribuintes e mostrando o total das taxas pagas, so tem duas funcoes principais basicamente.
+
+        static void Main(string[] args)
+        {
+            List<Contribuinte> contribuintes = new List<Contribuinte>();
+
+            //Por um nome concreto nas variaveis, eu sei que é so um exercicio rapidin, é so pro senhor nao esquecer
+            int numberOfTaxPayers = int.Parse(ReadInput("Enter the number of tax payers: "));
+
+            for (int i = 1; i <= numberOfTaxPayers; i++)
+            {
+                print($"Tax payer #{i} data: ");
+                Contribuinte contribuinte = EnterTaxPayerInformation();
+
+                //Caso der erro no preenchimento do contribuinte, so passar pro proximo
+                if (contribuinte == null) { 
+                    continue;
+                }
+
+                // Se chegar até aqui é que deu certo o preenchimento das informaçoes do contribuinte
+                contribuintes.Add(contribuinte);
+            }
+
+            //mostrar o total dos impostos
+            printTotalPaidTaxes(contribuintes);
+
+            //A maioria das coisas foram simplificadas em funcoes, porque caso eu mudar a interface fica mais facil de adaptar o codigo.
+            //"Ah, nao quero mais fazer no cmd, mas quero fazer com uma interface grafica mesmo", essa mudança ficaria mais simples
+        }
+
+
+        //Preencher as informacoes de um contribuinte
+        Contribuinte EnterTaxPayerInformation()
+        {
+            char typeOfTaxPayer = char.ToUpper(char.Parse(ReadInput("Individual or Company (I/C)? ")));
+            string name = ReadInput("Name: ");
+            double anual = double.Parse(ReadInput("Annual income: "), CultureInfo.InvariantCulture);
+
+            //o Contribuinte pode ser de tipo Individual ou Company, mas os dois continuam sendo Contribuintes
+            //Entao posso continuar usando um objeto de tipo Contribuinte pra armazenar eles
+            //Aqui eu ja ponho o valor "null" no objeto, pra caso eu nao conseguir criar, la no Main eu ja sei que deu errado
+            Contribuinte taxPayer = null;
+
+            if (typeOfTaxPayer == 'I')
+            {
+                double health = double.Parse(ReadInput("Health expenditures: "), CultureInfo.InvariantCulture);
+                //Consegui recuperar todas as informacoes pra criar uma Individual entao no lugar de null vai ficar esse Individual
+                taxPayer = new Individual(name, anual, health);
+            }
+            else if (typeOfTaxPayer == 'C')
+            {
+                int employees = int.Parse(ReadInput("Number of employees: "));
+                //Mesma coisa aqui
+                taxPayer = new Company(name, anual, employees);
+            }
+
+            return taxPayer;
+        }
+
+        //Aqui é so uma preferencia minha, porque esse Console.WriteLine é grande dms kkkk
+        static void print(String message)
+        {
+            Console.WriteLine(message);
+        }
+
+        //Como esse programa tem varias vezes essas perguntas, eu gosto de simplificar assim pra poder nao ter que fazer o write e o read toda vez
+        static string ReadInput(string message)
+        {
+            Console.Write(message);
+            return Console.ReadLine();
+        }
+        
+        //Mesma coisa que disse la encima, caso um dia o programa evoluir e nao ser so um programa de cmd, vai ser mais facil substituir so isso daqui
+        static void printTotalPaidTaxes(List<Contribuinte> contribuintes)
+        {
+            double totalTaxes = 0.0;
+
+            foreach (Contribuinte contribuinte in contribuintes)
+            {
+                print(contribuinte.ToString());
+                totalTaxes += contribuinte.TaxesCalc();
+            }
+
+            print($"Total taxes paid {totalTaxes:F2}");
+        }
+    }
+
+}
