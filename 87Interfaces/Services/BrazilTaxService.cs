@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Course.Services
 {
-    internal class BrazilTaxService
+    internal class BrazilTaxService : ITaxService // isso aqui não é herança, mas sim uma realização da interface
     {
         public double Tax(double amount)
         {
