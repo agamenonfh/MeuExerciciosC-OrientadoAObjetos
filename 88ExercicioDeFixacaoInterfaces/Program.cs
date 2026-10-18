@@ -21,14 +21,14 @@ namespace Course
                 Console.Write("Enter number of installments: ");
                 int numberOfInstallments = int.Parse(Console.ReadLine());
 
-                Contract contract = new Contract(contractNumber, contractInitialDay, contractValue);
-
-                Installment installment = new Installment(numberOfInstallments);
+                Contract contract = new Contract(contractNumber, contractInitialDay, contractValue, numberOfInstallments);                               
             }
             catch (IOException e)
             {
                 Console.WriteLine($"An error ocurred: {e.Message}");
             }
+            Console.WriteLine("Intallments:");
+            Console.WriteLine();
         }
     }
 }
