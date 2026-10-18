@@ -1,34 +1,35 @@
 ﻿using System;
 using System.Globalization;
 using Course.Entities;
-using Course.Entities;
+using Course.Services;
 
 namespace Course
 {
-    internal class Program
+    class Program
     {
         static void Main(string[] args)
         {
-            try
-            {
-                Console.WriteLine("Enter contract data");
-                Console.Write("Number: ");
-                int contractNumber = int.Parse(Console.ReadLine());
-                Console.Write("Date (dd/MM/yyyy):");
-                DateTime contractInitialDay = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                Console.Write("Contract value: ");
-                double contractValue = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-                Console.Write("Enter number of installments: ");
-                int numberOfInstallments = int.Parse(Console.ReadLine());
 
-                Contract contract = new Contract(contractNumber, contractInitialDay, contractValue, numberOfInstallments);                               
-            }
-            catch (IOException e)
+            Console.WriteLine("Enter contract data");
+            Console.Write("Number: ");
+            int contractNumber = int.Parse(Console.ReadLine());
+            Console.Write("Date (dd/MM/yyyy): ");
+            DateTime contractDate = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            Console.Write("Contract value: ");
+            double contractValue = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            Console.Write("Enter number of installments: ");
+            int months = int.Parse(Console.ReadLine());
+
+            Contract myContract = new Contract(contractNumber, contractDate, contractValue);
+
+            ContractService contractService = new ContractService(new PaypalService());
+            contractService.ProcessContract(myContract, months);
+
+            Console.WriteLine("Installments:");
+            foreach (Installment installment in myContract.Installments)
             {
-                Console.WriteLine($"An error ocurred: {e.Message}");
+                Console.WriteLine(installment);
             }
-            Console.WriteLine("Intallments:");
-            Console.WriteLine();
         }
     }
 }

@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Course.Services
+﻿namespace Course.Services
 {
-    internal class PaypalService : IOnlinePaymentService
+    class PaypalService : IOnlinePaymentService
     {
-        public double Interest(double amount, int month)
+
+        private const double FeePercentage = 0.02;
+        private const double MonthlyInterest = 0.01;
+
+        public double Interest(double amount, int months)
         {
-            return amount * 0.01 * month;
+            return amount * MonthlyInterest * months;
         }
+
         public double PaymentFee(double amount)
         {
-            return amount * 0.02;
+            return amount * FeePercentage;
         }
     }
 }

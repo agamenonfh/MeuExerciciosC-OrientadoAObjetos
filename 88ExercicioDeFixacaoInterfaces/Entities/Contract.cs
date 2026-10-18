@@ -1,23 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Course.Entities
 {
-    internal class Contract
+    class Contract
     {
-        public int _Number { get; private set; }
-        public DateTime StartDate { get; set; }
-        public double TotalValue { get; set; }
-        public int Installment { get; set; }
 
-        public int Month { get; set; }
-        public Contract(int number, DateTime startDate, double totalValue, int month)
+        public int Number { get; set; }
+        public DateTime Date { get; set; }
+        public double TotalValue { get; set; }
+        public List<Installment> Installments { get; set; }
+
+        public Contract(int number, DateTime date, double totalValue)
         {
-            _Number = number;
-            StartDate = startDate;
+            Number = number;
+            Date = date;
             TotalValue = totalValue;
-            Installment = month;
+            Installments = new List<Installment>();
+        }
+
+        public void AddInstallment(Installment installment)
+        {
+            Installments.Add(installment);
         }
     }
 }

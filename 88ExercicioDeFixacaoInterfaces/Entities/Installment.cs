@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Security.AccessControl;
-using Course.Entities;
+using System.Globalization;
+
 namespace Course.Entities
 {
-    internal class Installment
+    class Installment
     {
-        public double Amount { get; set; }
+
         public DateTime DueDate { get; set; }
-        List<Installment> installments = new List<Installment>();
+        public double Amount { get; set; }
+
         public Installment(DateTime dueDate, double amount)
         {
             DueDate = dueDate;
@@ -16,8 +17,9 @@ namespace Course.Entities
 
         public override string ToString()
         {
-            return $"{DueDate:dd/MM/yyyy} - {Amount:F2}";
+            return DueDate.ToString("dd/MM/yyyy")
+                + " - "
+                + Amount.ToString("F2", CultureInfo.InvariantCulture);
         }
-
     }
 }
