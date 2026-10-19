@@ -3,7 +3,7 @@ using Course.Model.Entities;
 
 namespace Course.Model.Entities
 {
-    internal class Circle : Shape
+    internal class Circle : AbstractShape
     {
         public double Radius { get; set; }
         public override double Area()

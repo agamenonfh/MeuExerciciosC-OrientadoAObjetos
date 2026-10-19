@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace Course.Model.Entities
 {
-    internal class Rectangle : Shape
+    internal class Rectangle : AbstractShape
     {
         public double Height { get; set; }
         public double Width { get; set; }

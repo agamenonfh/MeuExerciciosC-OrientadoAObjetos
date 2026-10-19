@@ -21,12 +21,12 @@ namespace Course
                 string color = null;
                 if (clr == 'b')
                 {
-                    Shape circle = new Circle() { Color = Color.Black, Radius = radius};
+                    IShape circle = new Circle() { Color = Color.Black, Radius = radius}; // Nesse modelo eu cumpro um contrato em IShape;
                     Console.WriteLine(circle);
                 }
                 else if (clr == 'w')
                 {
-                    Shape circle = new Circle() { Color = Color.White, Radius = radius};
+                    IShape circle = new Circle() { Color = Color.White, Radius = radius};
                     Console.WriteLine(circle);
                 }
             }
@@ -41,12 +41,12 @@ namespace Course
                 string color = null;
                 if (clr == 'b')
                 {
-                    Shape rectangle = new Rectangle() { Color = Color.Black, Height = height, Width = width };
+                    IShape rectangle = new Rectangle() { Color = Color.Black, Height = height, Width = width };
                     Console.WriteLine(rectangle);
                 }
                 else if (clr == 'w')
                 {
-                    Shape rectangle = new Rectangle() { Color = Color.White, Height = height, Width = width };
+                    IShape rectangle = new Rectangle() { Color = Color.White, Height = height, Width = width };
                     Console.WriteLine(rectangle);
                 }
             }
