@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Course.Service
 {
-    internal class PrintService
+    internal class PrintService<T>
     {
-        private int[] _values = new int[10];
+        private T[] _values = new T[10];
         public int _count = 0;
-        public void AddValue(int value)
+        public void AddValue(T value)
         {
             if(_count == 10)
             {
@@ -16,7 +16,7 @@ namespace Course.Service
             _values[_count] = value;
             _count++;
         }
-        public int First()
+        public T First()
         {
             if (_count == 0)
             {

@@ -8,7 +8,7 @@ namespace Course
     {
         static void Main(string[] args)
         {
-            PrintService printServices = new PrintService();
+            PrintService<int> printServices = new PrintService<int>();
 
             Console.Write("How many values: ");
             int n = int.Parse(Console.ReadLine());
@@ -31,11 +31,3 @@ namespace Course
         }
     }
 }
-/*
- * How many values? 3
-10
-8
-23
-[10,8,23]
-First: 10
-*/
